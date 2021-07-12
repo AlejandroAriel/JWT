@@ -16,3 +16,18 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/sign_up', methods=['POST'])  #se utiliza POST porque se cree un usuario
+def sign_up_user():
+
+    body_params = request.get_json()
+    name = body_params.get("name", None)
+    last_name = body_params.get("last_name", None)
+    email = body_params.get("email", None)
+    password = body_params.get("password", None)
+
+    user1 = User(name = name, last_name = last_name, email = email, password = password)
+    db.session.add(user1)
+    db.session.commit()
+
+    return jsonify({"msg":"El usuario se creó correctamente"}), 200
